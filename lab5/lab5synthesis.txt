@@ -1,0 +1,54 @@
+*****************************
+* Lab 5 Synthesis Questions *
+*****************************
+Name(s):  Zifeng Wang
+NetID(s): zifenw
+
+
+-----------------------------------------------------------
+1) Alignment: 16-bytes
+   Reasoning:
+I do a loop in the part 5 and get the output like:
+Allocated 16 bytes at address: 0x185b6b0 
+Allocated 17 bytes at address: 0x185b6d0
+Allocated 18 bytes at address: 0x185b6f0
+Allocated 19 bytes at address: 0x185b710
+Allocated 20 bytes at address: 0x185b730
+Allocated 21 bytes at address: 0x185b750
+Allocated 22 bytes at address: 0x185b770
+Allocated 23 bytes at address: 0x185b790
+Allocated 24 bytes at address: 0x185b7b0
+Allocated 25 bytes at address: 0x185b7d0 (24 and before we just create 32 bytes blocks) 
+Allocated 26 bytes at address: 0x185b800 (25 and so on we create 48 bytes blocks) 
+Allocated 27 bytes at address: 0x185b830
+Allocated 28 bytes at address: 0x185b860
+Allocated 29 bytes at address: 0x185b890
+Allocated 30 bytes at address: 0x185b8c0
+Allocated 31 bytes at address: 0x185b8f0
+Allocated 32 bytes at address: 0x185b920
+
+From my observations, the allocator is likely aligning blocks to 16-byte boundaries, as I've noted that the gaps between allocations (25 to 26 bytes) suggest that memory blocks are rounded to a certain alignment. In your case, it seems to be 16-byte alignment. When an allocation falls outside of a 16-byte aligned boundary (e.g., from 25 bytes to 26 bytes), the allocator may add padding (or additional space) to ensure the block fits within an alignment boundary. 
+
+-----------------------------------------------------------
+2) Boundary Tag Size: 8-bytes
+   Reasoning: 
+A boundary tag is a piece of metadata placed at the end of a memory block that typically stores information about the block's size and its status.
+Based on my example where a 32-byte block can hold 24 bytes of usable data, the boundary tag size would indeed be the difference between the total block size and the usable size. So, for a 32-byte block, the boundary tag size would be: 32−24=8 bytes
+-----------------------------------------------------------
+
+
+
+
+// New malloc statement
+    void* extra_block = malloc(16); // Allocate 16 bytes
+    printf("Address of extra_block: %p\n", extra_block);
+// Existing malloc statement
+    Scores* class_grades = (Scores*) malloc(sizeof(Scores) * 5);
+    printf("Address of class_grades: %p\n", class_grades);
+Output:
+Address of extra_block: 0xd5f6b0
+Address of class_grades: 0xd5f6d0
+
+Address difference = 0xd5f6d0 - 0xd5f6b0 = 32 bytes. Since the difference is 32 bytes, the allocator aligns blocks to 32-byte boundaries.
+Why does malloc(16) or malloc(8) create a 32-byte block?
+The allocator rounds any block size to the nearest alignment size. Since the alignment is 32 bytes, even if you request 16 or 8 bytes, the allocator ensures the block size is at least 32 bytes.

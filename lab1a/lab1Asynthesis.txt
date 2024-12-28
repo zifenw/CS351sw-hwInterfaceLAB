@@ -1,0 +1,23 @@
+******************************
+* Lab 1a Synthesis Questions *
+******************************
+Name(s): Zifeng Wang  
+NetID(s): 2478280
+
+
+-----------------------------------------------------------
+1) Steps:
+Step 1: Ensure that the types of the two addresses are the same. This avoids compiler warnings about incompatible pointer types.
+Step 2: Pointer subtraction. When you subtract two pointers, C automatically calculates the difference in the number of elements between them, not the number of bytes.
+Step 3: Multiply by the size of the type. To obtain the difference in byte count, we need to multiply the result by the size of the type (for example, sizeof (int)). 
+
+-----------------------------------------------------------
+2) Explain:
+The parameters of the swap ins function must be pointers, as swapping two integers involves changing the values of specific memory locations, not just local copies of these values. If parameters are passed as integers (by value), the function will only swap local copies of these integers within the function, while keeping the original values outside the function unchanged.
+
+-----------------------------------------------------------
+3) Positive/drawback:
+Positive impact: Java abstracts low-level memory management, allowing beginners to focus more on object-oriented programming concepts, algorithms, and data structures without being troubled by pointer algorithms and memory allocation. This makes learning faster and less prone to errors.
+Disadvantage/limitation: Not learning pointers and memory management in the early stages may leave gaps in understanding how computers handle memory. When transitioning to languages such as C or C++that require explicit memory management, students may face a steeper learning curve.
+
+

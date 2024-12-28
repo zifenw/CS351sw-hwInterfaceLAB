@@ -1,0 +1,57 @@
+*****************************
+* Lab 4 Synthesis Questions *
+*****************************
+Name(s):  Zifeng Wang
+NetID(s): zifenw
+
+
+-----------------------------------------------------------
+1) Instructions in the nested loops that access memory
+   lab0.d:   14
+
+ List of instructions for lab0.d:
+
+  4009a6:       8b 55 ec                mov    -0x14(%rbp),%edx     	(Read)
+  4009a9:       8b 45 e8                mov    -0x18(%rbp),%eax		(Read)
+  4009af:       8b 55 e4                mov    -0x1c(%rbp),%edx		(Read)
+  4009b2:       8b 4d e8                mov    -0x18(%rbp),%ecx		(Read)
+  4009b5:       8b 45 ec                mov    -0x14(%rbp),%eax		(Read)
+  4009cb:       48 8b 45 d8             mov    -0x28(%rbp),%rax		(Read)		
+  4009d2:       8b 55 e4                mov    -0x1c(%rbp),%edx		(Read)
+  4009d7:       89 10                   mov    %edx,(%rax)		(Write)
+  4009d9:       83 45 e4 01             addl   $0x1,-0x1c(%rbp)		(Write)
+  4009dd:       81 7d e4 f3 01 00 00    cmpl   $0x1f3,-0x1c(%rbp)	(Write)
+  4009e6:       83 45 e8 01             addl   $0x1,-0x18(%rbp)		(Write)
+  4009ea:       81 7d e8 f3 01 00 00    cmpl   $0x1f3,-0x18(%rbp)	(Write)
+  4009f3:       83 45 ec 01             addl   $0x1,-0x14(%rbp)		(Write)
+  4009f7:       81 7d ec f3 01 00 00    cmpl   $0x1f3,-0x14(%rbp)	(Write)
+
+   lab0opt.d: 1
+   List of instructions for lab0opt.d:
+
+  4009bb:       89 0c 96                mov    %ecx,(%rsi,%rdx,4)
+
+-----------------------------------------------------------
+2) Where are the loop variables stored in lab0.d:
+   i: -0x14(%rbp）
+   j: -0x18(%rbp)
+   k: -0x1c(%rbp)
+-----------------------------------------------------------
+3) Corresponding values in lab0opt.d:
+   %edx: k
+   %ecx: i + j + k
+-----------------------------------------------------------
+4) Effect on number of misses: Increase
+
+   Explain: 
+When the starting address of a 32x32 matrix does not map to the beginning of a cache block, cache misses are likely to increase. This is because the matrix elements, which would normally fit within a single cache block, are now spread across multiple cache blocks. As a result, when accessing the elements, the cache must load multiple blocks to retrieve the required data, which increases the number of cache misses. This issue is primarily caused by reduced spatial locality, where adjacent elements that could have been fetched together in one cache block are now fragmented, leading to inefficient memory access and more frequent cache misses.
+
+
+-----------------------------------------------------------
+5) Effect on number of misses: Increase
+
+   Explain:
+When the dimensions of a 64x64 matrix are changed to 57x71, cache efficiency is further reduced. The matrix is no longer aligned with the cache block size, and the irregular shape of the matrix (non-square and not a multiple of the cache block size) exacerbates the problem. The access patterns are disrupted, and the matrix elements are scattered across cache blocks in inefficient ways. This misalignment and the irregular shape of the matrix lead to more cache misses as the processor must access multiple cache blocks to retrieve adjacent data, resulting in a decrease in overall performance.
+
+
+-----------------------------------------------------------

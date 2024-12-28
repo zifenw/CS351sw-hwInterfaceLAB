@@ -1,0 +1,29 @@
+*****************************
+* Lab 2 Synthesis Questions *
+*****************************
+Name(s): Zifeng Wang
+NetID(s): zifenw
+
+
+-----------------------------------------------------------
+1) &value:  12 bytes
+   &array:  16 bytes
+-----------------------------------------------------------
+2) Init:   <fillArray+40>
+   Update: <fillArray+146>
+-----------------------------------------------------------
+3) String address: 0x4020a2
+   Part of memory: Literals
+   Assembly instruction address: <part_2+8>
+-----------------------------------------------------------
+4) Strategy + example:
+One strategy that I found particularly useful for understanding and debugging assembly code in 351 was using the disas command in GDB. The disas (disassemble) command helped me visualize the entire structure of a function, seeing the instructions in assembly and understanding the flow of the program. By running disas, I could view how the high-level logic translated into low-level assembly instructions, which was invaluable for pinpointing where errors or unexpected behavior occurred.
+
+Example from Lab 2 (Phase 5): In Phase 5 of the bomb lab, disas played a crucial role in helping me understand how the program manipulated strings and compared characters. I used disas on the function responsible for transforming the input string, and it revealed how the program was applying a bitwise AND operation to limit the character indices before accessing a memory array. This visualization helped me trace how the input was being mapped to a new string and compare it with the expected result. By understanding this logic through disas, I was able to identify the correct input sequence, allowing me to successfully defuse this phase of the bomb.
+-----------------------------------------------------------
+5) Difficulty + why (past experience):
+The most difficult aspect of x86-64 assembly code for me was understanding pointer arithmetic and indirect memory addressing (e.g., dealing with instructions like mov (%rax), %rbx). This was challenging because it required me to track not only the values in the registers but also how they were being used to reference memory locations.
+
+Why it was difficult: My prior experience with higher-level languages like Java didn’t involve direct memory management or understanding how memory addresses were calculated. The abstraction provided by those languages meant I didn’t have to worry about the underlying memory structures. Transitioning to low-level assembly, where every memory access and pointer operation had to be explicitly managed, was a steep learning curve for me.
+-----------------------------------------------------------
+

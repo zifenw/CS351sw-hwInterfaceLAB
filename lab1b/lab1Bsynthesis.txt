@@ -1,0 +1,32 @@
+******************************
+* Lab 1b Synthesis Questions *
+******************************
+Name(s): Zifeng Wang
+NetID(s): 2478280
+
+
+-----------------------------------------------------------
+1) Benefit 1: A larger range of project IDs: Another way of representing project IDs is to use 8 bits instead of 6 bits, which allows for 256 unique IDs instead of just 64. This can accommodate a wider variety of products in the store.
+
+   Benefit 2: Simpler operation: By using 8 bits for both item counting and ID, byte alignment makes it easier to operate and extract ID or count using bit operations, which may be more efficient than processing 6 and 10 bits.
+
+   Drawback: The storage of items is reduced, so the maximum number of items that can be stored in a section is reduced from ten to eight. 
+
+   Store manager preference w/ justification: As a store manager, I prefer the current notation (ID is 6 digits, product count is 10 digits) because in most retail environments, the maximum number of items that can be stored in each section is more important. Although having more unique item IDs is useful, the ability to store more items in each section reduces the need to constantly replenish inventory and better utilizes storage space. 
+
+-----------------------------------------------------------
+2) Difference? Y/N and Explain:
+For 32 bits, If y is signed: y = -1; results in y being assigned the value -1, stored as 0xFFFFFFFF in memory.
+y = 0xFFFFFFFF; also results in y being -1 due to the way two's complement encoding works.
+If y is unsigned:y = -1; will cause y to store the maximum unsigned integer value (in 32-bit, this is 4,294,967,295).
+y = 0xFFFFFFFF; will store the same value, 4,294,967,295, without any changes.  
+
+However, in a 64-bit context, there can indeed be a difference.
+y = -1; (if treated as a signed integer) will be sign-extended in 64-bit, so it becomes 0xFFFFFFFFFFFFFFFF (i.e., -1 in a 64-bit signed context).
+y = 0xFFFFFFFF; will remain 0x00000000FFFFFFFF (i.e., 4294967295 as a 64-bit value).
+
+-----------------------------------------------------------
+3) Explain: floating-point numbers often involve rounding errors because they cannot accurately represent most real numbers. Due to these precision issues, when represented in floating-point form, two mathematically equal numbers may not be exactly the same.
+
+   Considerations: A more reliable way to compare two floating-point numbers is to check if the absolute difference between them is less than the selected threshold (epsilon)
+

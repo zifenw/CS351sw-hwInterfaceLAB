@@ -1,0 +1,33 @@
+*****************************
+* Lab 3 Synthesis Questions *
+*****************************
+Name(s):  Zifeng Wang
+NetID(s): zifenw
+
+
+-----------------------------------------------------------
+1) Explain:  
+Buffer overflow: In the fill_array function, when writing the 15th element to the array, it exceeds the buffer range allocated for the array. This will cause the written data to overwrite the return address (0x4015a9). Due to the return address being overwritten, when executing the ret instruction, the program will attempt to jump to an invalid or unexpected address (overwritten address), resulting in a segmentation fault
+
+This assembly instruction causes the segmentation fault:
+0x000000000040126d <+85>:    mov    %edx,(%rax)
+This instruction tries to write to array[i] when i exceeds the bounds of the array, causing a buffer overflow and corrupting the stack, ultimately leading to a segmentation fault.
+-----------------------------------------------------------
+2) Minimum length to cause a seg fault: 
+the minimum length needed to cause a segmentation fault when filling the array would be 15 values
+   Calculation:
+In the assembly code, we see that 0x00000000004012d0 <+0>: sub $0x48,%rsp indicates that 72 bytes are allocated on the stack for local variables. This would likely be used for storing the array and other local variables in part_2.
+In addition, 0x00000000004012de <+14>:    lea    0x10(%rsp),%rax, this instruction uses the lea (load effective address) instruction to load the address of the array into the register %rax. The address is computed as 0x10 bytes above the current stack pointer %rsp. (maybe the compiler creates a buffer for additional safety in memory access).
+%rsp go down 72 bits and go up 16bits, the stack frame above the buffer now is a total of 56 bytes. Each integer typically occupies 4 bytes, so this just fit if we called with a length of 14, 14*4 = 56. But  if fill_array is called with a length of 15, it will attempt to write 15 integers to the array. Therefore, fill_array(array, 15) would need 15×4=60 bytes for the integers, which will overwrite the return address.
+
+-----------------------------------------------------------
+3) Hacker Reflection:
+
+The 'Hacker Moment': The part that makes me feel like a hacker the most is when I successfully execute a code injection attack and see the program start executing the code I injected. Watching the return pointer point to my carefully crafted instruction feels like uncovering a hidden control over the system that should not be accessed. This is both exciting and somewhat unsettling, as it demonstrates how small vulnerabilities in code can give unexpected power. The pleasure of making vulnerabilities work is also balanced by a sense of responsibility - if used maliciously, this power can be dangerous.
+
+-----------------------------------------------------------
+4) Vulnerabilities and Security:
+
+Realizing how easy it is to exploit these vulnerabilities has made me take computer security more seriously and cautiously. It is evident that even minor oversights in the code can lead to significant security risks, allowing anyone with the ability to discover and exploit them to use the system. This experience emphasized the importance of secure coding practices, particularly input validation and memory security, and enhanced my appreciation for defensive programming. Overall, this has made me more aware that security needs to be a priority at every stage of software development to minimize potential vulnerabilities.
+
+-----------------------------------------------------------
